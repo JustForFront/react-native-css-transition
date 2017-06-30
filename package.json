@@ -4,7 +4,7 @@
     "email": "dkishere@gmail.com"
   },
   "bugs": {
-    "url": "https://github.com/JustForFront/react-native-cssTransition.git/issues"
+    "url": "https://github.com/JustForFront/react-native-css-transition.git/issues"
   },
   "dependencies": {
     "react": "^16.0.0-alpha.12",
@@ -19,7 +19,7 @@
   "files": [
     "src"
   ],
-  "homepage": "https://github.com/JustForFront/react-native-cssTransition",
+  "homepage": "https://github.com/JustForFront/react-native-css-transition",
   "license": "BSD-2-Clause",
   "main": "src/index.js",
   "maintainers": [
@@ -28,9 +28,9 @@
       "email": "dkishere@gmail.com"
     }
   ],
-  "name": "react-native-cssTransition",
+  "name": "react-native-css-transition",
   "repository": {
-    "url": "git+ssh://git@github.com/JustForFront/react-native-cssTransition.git",
+    "url": "git+ssh://git@github.com/JustForFront/react-native-css-transition.git",
     "type": "git"
   },
   "scripts": {
