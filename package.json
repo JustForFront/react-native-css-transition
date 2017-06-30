@@ -1,0 +1,39 @@
+{
+  "author": {
+    "name": "Dkishere",
+    "email": "dkishere@gmail.com"
+  },
+  "bugs": {
+    "url": "https://github.com/JustForFront/react-native-cssTransition.git/issues"
+  },
+  "dependencies": {
+    "react": "^16.0.0-alpha.12",
+    "react-native": "^0.45.1"
+  },
+  "description": "Enable animate react-native components like css transition property.",
+  "devDependencies": {
+    "react": "^16.0.0-alpha.12",
+    "react-native": "^0.45.1"
+  },
+  "directories": {},
+  "files": [
+    "src"
+  ],
+  "homepage": "https://github.com/JustForFront/react-native-cssTransition",
+  "license": "BSD-2-Clause",
+  "main": "src/index.js",
+  "maintainers": [
+    {
+      "name": "Dkishere",
+      "email": "dkishere@gmail.com"
+    }
+  ],
+  "name": "react-native-cssTransition",
+  "repository": {
+    "url": "git+ssh://git@github.com/JustForFront/react-native-cssTransition.git",
+    "type": "git"
+  },
+  "scripts": {
+  },
+  "version": "0.1.0"
+}
