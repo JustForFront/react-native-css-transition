@@ -30,8 +30,7 @@ class TransitionComponents extends Component {
 
         super(props);
 
-        const style = this.prepareAnimatedValues(props.style,props.animationOptions);
-        this._styleValues = style;
+        this._styleValues = this.prepareAnimatedValues(props.style,props.animationOptions);
 
     }
 
@@ -85,14 +84,20 @@ class TransitionComponents extends Component {
 
             let animatedValue = _animatedValues[k],
                 setting = _animatedSettings[k],
-                option = typeof animationOptions[k]!=="undefined"?animationOptions[k]:null,
-                interpolate = option&&option.interpolate!=="undefined"?option.interpolate:null,
+                option = typeof animationOptions[k]!=="undefined"?animationOptions[k]:{},
+                interpolate = typeof setting.interpolate!=="undefined"?setting.interpolate:null,
                 typeofV = typeof style[k],
                 animatedOption = {
                     toValue: style[k],
                     duration: setting.duration,
                     delay: setting.delay?setting.delay:0,
                 };
+
+            if(typeof animationOptions["_all"]!=="undefined"){
+
+                option = {...animationOptions._all,...option};
+
+            }
 
             if(typeofV!=="undefined"&&style[k]!=oStyle[k]){
 
@@ -213,13 +218,12 @@ class TransitionComponents extends Component {
 
                 if(typeof _animatedValues[transaction.property]==="undefined"){
 
-                    let option = typeof animationOptions[property]!=="undefined"?animationOptions[property]:{},
-                        interpolate = option.interpolate!=="undefined"?option.interpolate:null,
+                    let interpolate = typeof transaction.interpolate!=="undefined"?transaction.interpolate:null,
                         initVal = interpolate?interpolate.inputRange[0]:(typeof styleValues[property]==="number"?styleValues[property]:0);
 
                     _animatedValues[property] = new Animated.Value(initVal);
 
-                    if(typeof val==="string"){
+                    if(typeof val==="string"||interpolate){
 
                         interpolatedValues[property] = _animatedValues[property].interpolate(interpolate?interpolate:{
                             inputRange: [0, 100],
@@ -292,4 +296,7 @@ const createComponent = (baseComponentName)=>{
 
 export const Transition = {
     Text:createComponent("Text"),
+    View:createComponent("View"),
+    ScrollView:createComponent("ScrollView"),
+    Image:createComponent("Image")
 };
