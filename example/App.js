@@ -65,6 +65,7 @@ export default class App extends Component {
                 <Transition.Text
                     style={GetStyle(compliedStyle.Counter.stateTest,{fontSize:10+v*5},v)}
                     animationOptions={{_all:{duration:500}}}   //overwrite all duration
+                    animationPlayed={()=>{ console.log("Animated!") }}
                 >{v}</Transition.Text>
             </Text>
             <Button title="Add" onPress={this.incrementCount}/>
