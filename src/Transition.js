@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component,createFactory } from 'react';
 import PropTypes from 'prop-types';
 import {
     Animated
@@ -84,7 +84,7 @@ class TransitionComponents extends Component {
 
             let animatedValue = _animatedValues[k],
                 setting = _animatedSettings[k],
-                option = typeof animationOptions[k]!=="undefined"?animationOptions[k]:{},
+                option = typeof animationOptions[k]!=="undefined"?animationOptions[k]:null,
                 interpolate = typeof setting.interpolate!=="undefined"?setting.interpolate:null,
                 typeofV = typeof style[k],
                 animatedOption = {
@@ -95,7 +95,7 @@ class TransitionComponents extends Component {
 
             if(typeof animationOptions["_all"]!=="undefined"){
 
-                option = {...animationOptions._all,...option};
+                option = option?{...animationOptions._all,...option}:animationOptions._all;
 
             }
 
@@ -123,8 +123,6 @@ class TransitionComponents extends Component {
                 }
 
                 if(option){
-
-                    delete option.interpolate;
 
                     animatedOption = {...animatedOption,...option};
 
@@ -214,23 +212,23 @@ class TransitionComponents extends Component {
             transactions.map((transaction)=>{
 
                 const property = transaction.property,
-                    val = styleValues[property];
+                    val = styleValues[property],
+                    interpolate = typeof transaction.interpolate!=="undefined"?transaction.interpolate:null;
 
-                if(typeof _animatedValues[transaction.property]==="undefined"){
+                    if(typeof _animatedValues[transaction.property]==="undefined"){
 
-                    let interpolate = typeof transaction.interpolate!=="undefined"?transaction.interpolate:null,
-                        initVal = interpolate?interpolate.inputRange[0]:(typeof styleValues[property]==="number"?styleValues[property]:0);
+                        const initVal = interpolate?interpolate.inputRange[0]:(typeof val==="number"?val:0);
 
-                    _animatedValues[property] = new Animated.Value(initVal);
-
-                    if(typeof val==="string"||interpolate){
-
-                        interpolatedValues[property] = _animatedValues[property].interpolate(interpolate?interpolate:{
-                            inputRange: [0, 100],
-                            outputRange: [val, val]
-                        });
+                        _animatedValues[property] = new Animated.Value(initVal);
 
                     }
+
+                if(typeof val==="string"||interpolate){
+
+                    interpolatedValues[property] = _animatedValues[property].interpolate(interpolate?interpolate:{
+                        inputRange: [0, 100],
+                        outputRange: [val, val]
+                    });
 
                 }
 
@@ -252,6 +250,7 @@ class TransitionComponents extends Component {
             _animatedValues = this._animatedValues,animatedStyle = {};
 
         delete props.style;
+        delete props.children;
         delete props.component;
 
         for(key in _animatedValues){
@@ -279,24 +278,40 @@ class TransitionComponents extends Component {
         }
 
         return (
-            <TransitionComponent style={style} {...props}>{props.children}</TransitionComponent>
+            <TransitionComponent style={style} {...props}>{this.props.children}</TransitionComponent>
         );
 
     }
 
 }
 
-const createComponent = (baseComponentName)=>{
+class TransitionText extends TransitionComponents{
 
-    TransitionComponents.defaultProps = {component:Animated[baseComponentName]};
+    static defaultProps = {component:Animated.Text};
 
-    return TransitionComponents;
+}
 
-};
+class TransitionView extends TransitionComponents{
+
+    static defaultProps = {component:Animated.View};
+
+}
+
+class TransitionScrollView extends TransitionComponents{
+
+    static defaultProps = {component:Animated.ScrollView};
+
+}
+
+class TransitionImage extends TransitionComponents{
+
+    static defaultProps = {component:Animated.Image};
+
+}
 
 export const Transition = {
-    Text:createComponent("Text"),
-    View:createComponent("View"),
-    ScrollView:createComponent("ScrollView"),
-    Image:createComponent("Image")
+    Text:TransitionText,
+    View:TransitionView,
+    ScrollView:TransitionScrollView,
+    Image:TransitionImage
 };

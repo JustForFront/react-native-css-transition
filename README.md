@@ -20,12 +20,12 @@ export const styles = {
     Counter:{
         stateTest: {
             default: {
-                transition:[{    //required. Must not pass to native StyleSheet.create directly, will cause error
+                transition:[{    //Must not pass to native StyleSheet.create directly, will cause error
                     property:"color",
                     duration:1000,
                     delay:0,
                     timingFunction:Easing.back, // native Easing options
-                    interpolate:{   // Default interpolate option for non-numeric value
+                    interpolate:{   // Default interpolate option for non-numeric value, auto generated
                             inputRange: [0, 100],
                             outputRange: ["#333", "#333"] // Default is initial value
                     },
